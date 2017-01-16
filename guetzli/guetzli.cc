@@ -176,6 +176,27 @@ void WriteFileOrDie(FILE* f, const std::string& contents) {
   }
 }
 
+bool CheckFileExtension(char* File)
+{
+  std::string f = File;
+  if (f.substr(f.find_last_of(".") + 1) == "jpg" || f.substr(f.find_last_of(".") + 1) == "jpeg") {
+    return true;
+  }
+  return false;
+}
+
+char* ReplaceFileExtension(char* File) {
+  std::string f = File;
+  char *nf = new char[f.length() + 1];
+  std::string newExt = "jpg";
+  std::string::size_type i = f.rfind('.', f.length());
+  if (i != std::string::npos) {
+    f.replace(i + 1, newExt.length(), newExt);
+  }
+  strcpy(nf, f.c_str());
+  return nf;
+}
+
 }  // namespace
 
 int main(int argc, char** argv) {
@@ -239,7 +260,13 @@ int main(int argc, char** argv) {
 
   char* out = argv[2];
   if (argc == 2) {
+    if (CheckFileExtension(argv[1])) {
       out = argv[1];
+    }
+    else
+    {
+      out = ReplaceFileExtension(argv[1]);
+    }
   }
 
   FILE* fout = fopen(out, "wb");
