@@ -195,13 +195,8 @@ int main(int argc, char** argv) {
     return 1;
   }
 
-  FILE* fout = fopen(argv[2], "wb");
-  if (!fout) {
-    fprintf(stderr, "Can't open output file for writing\n");
-    return 1;
-  }
-
   std::string in_data = ReadFileOrDie(fin);
+  fclose(fin);
   std::string out_data;
 
   guetzli::Params params;
@@ -239,6 +234,13 @@ int main(int argc, char** argv) {
   if (out_data.empty())
   {
     fprintf(stderr, "Guetzli processing failed\n");
+    return 1;
+  }
+
+
+  FILE* fout = fopen(argv[2], "wb");
+  if (!fout) {
+    fprintf(stderr, "Can't open output file for writing\n");
     return 1;
   }
 
