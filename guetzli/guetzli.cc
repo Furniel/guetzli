@@ -184,7 +184,7 @@ int main(int argc, char** argv) {
       "guetzli [flags] input_filename output_filename");
   ParseCommandLineFlags(&argc, &argv, true);
 
-  if (argc != 3) {
+  if (argc != 3 && argc != 2) {
     ShowUsageWithFlags(argv[0]);
     return 1;
   }
@@ -237,8 +237,12 @@ int main(int argc, char** argv) {
     return 1;
   }
 
+  char* out = argv[2];
+  if (argc == 2) {
+      out = argv[1];
+  }
 
-  FILE* fout = fopen(argv[2], "wb");
+  FILE* fout = fopen(out, "wb");
   if (!fout) {
     fprintf(stderr, "Can't open output file for writing\n");
     return 1;
