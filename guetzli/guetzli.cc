@@ -236,6 +236,12 @@ int main(int argc, char** argv) {
     }
   }
 
+  if (out_data.empty())
+  {
+    fprintf(stderr, "Guetzli processing failed\n");
+    return 1;
+  }
+
   WriteFileOrDie(fout, out_data);
   return 0;
 }
