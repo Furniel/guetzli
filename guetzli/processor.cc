@@ -18,6 +18,7 @@
 
 #include <algorithm>
 #include <set>
+#include <string.h>
 #include <vector>
 
 #include "guetzli/butteraugli_comparator.h"
@@ -386,7 +387,7 @@ void Processor::ComputeBlockZeroingOrder(
   memcpy(processed_block, block, sizeof(processed_block));
   while (!input_order.empty()) {
     float best_err = 1e17;
-    int best_i = -1;
+    int best_i = 0;
     for (int i = 0; i < std::min<size_t>(params_.zeroing_greedy_lookahead,
                                          input_order.size());
          ++i) {
